@@ -23,13 +23,15 @@ std::string encode_and_decode(std::string const& str, bool fl = 0) {
     }
 
     std::ifstream fin(FILE_NAME + IN);
-    std::ofstream fout(FILE_NAME + TXT);
+    std::ofstream(FILE_NAME + TXT);
+    std::ofstream fout(FILE_NAME + TXT, std::ios::app);
     encode(fin, fout);
     fin.close();
     fout.close();
 
     std::ifstream fi(FILE_NAME + TXT);
-    std::ofstream fo(FILE_NAME + OUT);
+    std::ofstream(FILE_NAME + OUT);
+    std::ofstream fo(FILE_NAME + OUT, std::ios::app);
     decode(fi, fo);
     fi.close();
     fo.close();
@@ -135,7 +137,6 @@ TEST(correctness, all_ASCII_test) {
     EXPECT_TRUE(equal_files(f1, f2));
 }
 
-
 TEST(correctness, random_test) {
     srand(time(0));
     for (size_t i = 0; i < 10; ++i) {
@@ -179,13 +180,15 @@ TEST(correctness, big_abc_dig_test) {
 
 TEST(correctness, 15mb_test) {
     std::ifstream fin("test/big_file.in");
-    std::ofstream fout(FILE_NAME + TXT);
+    std::ofstream(FILE_NAME + TXT);
+    std::ofstream fout(FILE_NAME + TXT, std::ios::app);
     encode(fin, fout);
     fin.close();
     fout.close();
 
     std::ifstream fi(FILE_NAME + TXT);
-    std::ofstream fo(FILE_NAME + OUT);
+    std::ofstream(FILE_NAME + OUT);
+    std::ofstream fo(FILE_NAME + OUT, std::ios::app);
     decode(fi, fo);
     fi.close();
     fo.close();
@@ -197,13 +200,15 @@ TEST(correctness, 15mb_test) {
 
 TEST(correctness, pdf_test) {
     std::ifstream fin("test/sample.pdf");
-    std::ofstream fout(FILE_NAME + TXT);
+    std::ofstream(FILE_NAME + TXT);
+    std::ofstream fout(FILE_NAME + TXT, std::ios::app);
     encode(fin, fout);
     fin.close();
     fout.close();
 
     std::ifstream fi(FILE_NAME + TXT);
-    std::ofstream fo(FILE_NAME + OUT);
+    std::ofstream(FILE_NAME + OUT);
+    std::ofstream fo(FILE_NAME + OUT, std::ios::app);
     decode(fi, fo);
     fi.close();
     fo.close();
@@ -213,4 +218,3 @@ TEST(correctness, pdf_test) {
     std::ifstream f2(FILE_NAME + OUT);
     EXPECT_TRUE(equal_files(f1, f2));
 }
-

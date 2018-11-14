@@ -14,7 +14,7 @@
 struct Node {
     Node();
     Node(uint64_t cnt, uint8_t c);
-    Node(sp, sp);
+    Node(std::shared_ptr <Node>, std::shared_ptr <Node>);
 
     ~Node ();
 
@@ -29,8 +29,8 @@ struct Node {
     void DFS(uint64_t, uint64_t, huffman_table &);
 
     private:
-    sp L = nullptr;
-    sp R = nullptr;
+    std::shared_ptr <Node> L = nullptr;
+    std::shared_ptr <Node> R = nullptr;
     uint64_t cnt = 0;
     uint64_t code_len = 0;
     uint8_t c = 0;
@@ -38,7 +38,7 @@ struct Node {
 };
 
 struct Comp {
-    bool operator() (const sp &, const sp &) const;
+    bool operator() (const std::shared_ptr <Node> &, const std::shared_ptr <Node> &) const;
 };
 
 void make_tree(std::vector <uint64_t> &, huffman_table &);
