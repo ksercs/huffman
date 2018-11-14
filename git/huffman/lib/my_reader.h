@@ -6,29 +6,24 @@
 
 struct My_reader {
 
-    explicit My_reader(std::istream &);
-    explicit My_reader(std::istream &, bool);
+    explicit My_reader(std::ifstream &);
+    explicit My_reader(std::ifstream &, bool);
 
-    void read_next_section();
     uint8_t read_byte();
     decode_map read_table();
+    void start_reading();
 
     bool is_end();
-    bool get_last_symbol();
-    bool is_zeroes_cnt();
-
-    uint8_t get_zeroes_cnt() const;
-    size_t get_file_size() const;
+    bool is_penultimate();
+    bool is_empty();
 
     void to_begin();
 
 private:
-    std::istream &is;
+    std::ifstream &is;
     VEC <uint8_t> buf;
-    size_t file_size = 0;
     size_t pos = 0;
-    size_t section_ind = 0;
-    uint64_t read_size = 0; // сколько байтов прочитали
+    uint8_t unread_buf_size;
 };
 
 

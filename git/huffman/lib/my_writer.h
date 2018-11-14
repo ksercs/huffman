@@ -9,18 +9,15 @@
 
 struct My_writer {
 
-    My_writer(std::ostream &);
+    My_writer(std::ofstream &);
 
     void write_buf();
     void write_table(huffman_table &);
     void write_ost(uint8_t);
 
-    void push(uint8_t);
+    void write_byte(uint8_t);
 private:
-    std::ostream & os;
-    VEC <uint8_t> buf;
-    size_t pos = 0;
-    size_t file_size = 0;
+    std::ofstream & os;
 };
 
 #endif //MY_WRITER_H

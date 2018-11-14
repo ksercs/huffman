@@ -8,7 +8,7 @@ Node::Node() : cnt(0), c(0) {}
 
 Node::Node(uint64_t _cnt, uint8_t _c) : cnt(_cnt), c(_c) {}
 
-Node::Node(sp _L, sp _R) : L(_L), R(_R) {
+Node::Node(std::shared_ptr <Node> _L, std::shared_ptr <Node> _R) : L(_L), R(_R) {
     set_cnt(_L->get_cnt() + _R->get_cnt());
 }
 
@@ -16,12 +16,11 @@ Node::~Node () {
     L = R = nullptr;
 }
 
-bool Comp::operator() (const sp & a, const sp & b) const {
+bool Comp::operator() (const std::shared_ptr <Node> & a, const std::shared_ptr <Node> & b) const {
     return a->get_cnt() < b->get_cnt();
 }
 
 void Node::DFS(uint64_t s, uint64_t len, std::vector < std::pair<uint64_t, uint64_t> > & codes) {
-    //std::cout << "DFS : " << s << " " << len << "\n";
     if (L == nullptr && R == nullptr) {
         if (!len) {
             len = 1;
@@ -29,7 +28,6 @@ void Node::DFS(uint64_t s, uint64_t len, std::vector < std::pair<uint64_t, uint6
         code = s;
         code_len = len;
         codes[c] = {s, len};
-      //  std::cout << c << " " << s << " " << len << "\n" << codes[c].first << " " << codes[c].second << "\n";
         return;
     }
 
@@ -38,18 +36,12 @@ void Node::DFS(uint64_t s, uint64_t len, std::vector < std::pair<uint64_t, uint6
 }
 
 void make_tree(std::vector <uint64_t> & num, huffman_table & codes) {
-    std::multiset<sp, Comp> ms;
-//    std::cout << "XUI " << ((size_t)0 < ALPHA) << "\n";
-//    std::cout << num.size() << "\n";
+    std::multiset<std::shared_ptr <Node>, Comp> ms;
     for (size_t i = 0; i < ALPHA; ++i) {
-        //std::cout << i << " : ";
         if (num[i] != 0u) {
-        //    std::cout << "->>>>>>>>>>>>>>>>>> " << i << " " << num[i] << "\n";
             ms.insert(std::make_shared <Node>(Node(num[i], i)));
         }
-        //std::cout << "\n";
     }
-    //std::cout << "HEY\n";
     while (ms.size() > 1) {
         auto a = *ms.begin();
         ms.erase(ms.begin());

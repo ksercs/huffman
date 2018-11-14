@@ -6,11 +6,13 @@
 #include "my_writer.h"
 #include "tree.h"
 
-void encode(std::istream &, std:: ostream &);
-void decode(std::istream &, std:: ostream &);
+void encode(std::ifstream &, std:: ofstream &);
+void decode(std::ifstream &, std:: ofstream &);
 
 void build_table(My_reader &);
 void write_encode(My_reader &, My_writer &, huffman_table &);
 void write_decode(My_reader &, My_writer &, decode_map &);
+
+bool check_endian();
 
 #endif //HUFFMAN_H

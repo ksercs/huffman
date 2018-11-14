@@ -13,14 +13,27 @@ const std::string DE = "decode";
 // 1 string (com)         = 'encode' or 'decode'
 // 2 string (input_name)  = name of input file
 // 3 string (output_name) = name of output file
-int main() {
+int main(int argc, char * argv[]) {
     std::string com, input_name, output_name;
-    std::cin >> com >> input_name >> output_name;
+    //std::cin >> com >> input_name >> output_name;
+    if (argc != 4) {
+        std::cout << "encode/decode input_file output_file\n";
+        return 0;
+    }
+    if (check_endian()) {
+        std::cout << "Sorry, only for little endian\n";
+        return 0;
+    }
+    com = argv[1];
+    input_name = argv[2];
+    output_name = argv[3];
+
     if (com != EN && com != DE) {
         std::cout << "Invalid command!\n";
     } else {
         std::ifstream fin(input_name);
-        std::ofstream fout(output_name);
+        std::ofstream(output_name, std::ios::out);
+        std::ofstream fout(output_name, std::ios::app);
         if (!fin) {
             std::cout << "Can't open input file!\n";
         } else if (!fout) {
