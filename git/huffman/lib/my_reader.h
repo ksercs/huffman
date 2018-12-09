@@ -21,7 +21,7 @@ struct My_reader {
 
 private:
     std::ifstream &is;
-    VEC <uint8_t> buf;
+    std::vector <uint8_t> buf;
     size_t pos = 0;
     uint8_t unread_buf_size;
 };

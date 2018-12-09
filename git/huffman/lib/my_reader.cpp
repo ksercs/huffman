@@ -2,7 +2,7 @@
 
 #include "my_reader.h"
 
-My_reader::My_reader(std::ifstream & _is) : is(_is), pos(0), unread_buf_size(3) {
+My_reader::My_reader(std::ifstream & _is) : is(_is), pos(0), unread_buf_size(BUF_SIZE) {
     buf.resize(BUF_SIZE);
 }
 
@@ -28,7 +28,6 @@ decode_map My_reader::read_table() {
     for (size_t i = 0; i < ALPHA; ++i) {
         uint64_t a, b;
         is >> a >> b;
-//        std::cout << i << " : " << v8 << " " << v16 << "\n";
         if (b != 0) {
             mp[std::make_pair(a, b)] = (uint8_t)i;
         }
@@ -65,8 +64,6 @@ void smp_logging(uint8_t c) {
 
 uint8_t My_reader::read_byte() {
     uint8_t res = buf[pos];
-//    smp_logging(res);
-//    std::cout << pos << " : " << res << "\n";
     if (!is.eof()) {
         buf[pos] = (uint8_t)is.get();
     } else {
