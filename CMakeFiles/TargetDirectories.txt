@@ -1,5 +1,0 @@
-/home/ksercs/cpp-course/huffman/CMakeFiles/edit_cache.dir
-/home/ksercs/cpp-course/huffman/CMakeFiles/MAIN.dir
-/home/ksercs/cpp-course/huffman/CMakeFiles/HUFFMAN.dir
-/home/ksercs/cpp-course/huffman/CMakeFiles/TESTING.dir
-/home/ksercs/cpp-course/huffman/CMakeFiles/rebuild_cache.dir
