@@ -45,7 +45,7 @@ std::string encode_and_decode(std::string const& str, bool fl = 0) {
     std::string res;
     getline(fin, res);
     return res;
-} 
+}
 
 bool equal_files(std::ifstream && in1, std::ifstream && in2) {
     uint32_t size1;
