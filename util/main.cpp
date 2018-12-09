@@ -15,7 +15,6 @@ const std::string DE = "decode";
 // 3 string (output_name) = name of output file
 int main(int argc, char * argv[]) {
     std::string com, input_name, output_name;
-    //std::cin >> com >> input_name >> output_name;
     if (argc != 4) {
         std::cout << "encode/decode input_file output_file\n";
         return 0;
@@ -42,9 +41,7 @@ int main(int argc, char * argv[]) {
             clock_t tm = clock();
             switch (com[0]) {
                 case 'e' :
-                    //std:: cout << "BEFORE\n";
                     encode(fin, fout);
-                    //std::cout << "AFTER\n";
                     break;
                 case 'd' :
                     try {

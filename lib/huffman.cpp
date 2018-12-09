@@ -62,7 +62,7 @@ void write_encode(My_reader & in, My_writer & out, huffman_table & codes) {
     out.write_ost(ost % 8);
 }
 
-void encode(std::ifstream & fin, std::ofstream & fout) {
+void encode(std::istream & fin, std::ostream & fout) {
     My_reader in(fin);
     My_writer out(fout);
     std::vector <uint64_t> num(ALPHA);
@@ -102,7 +102,7 @@ void write_decode(My_reader & in, My_writer & out, decode_map & codes) {
     }
 }
 
-void decode(std::ifstream & fin, std::ofstream & fout) {
+void decode(std::istream & fin, std::ostream & fout) {
     My_reader in(fin, 1);
     if(in.is_empty()) {
         return;

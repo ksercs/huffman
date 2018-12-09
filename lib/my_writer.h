@@ -9,7 +9,7 @@
 
 struct My_writer {
 
-    My_writer(std::ofstream &);
+    My_writer(std::ostream &);
 
     void write_buf();
     void write_table(huffman_table &);
@@ -17,7 +17,7 @@ struct My_writer {
 
     void write_byte(uint8_t);
 private:
-    std::ofstream & os;
+    std::ostream & os;
 };
 
 #endif //MY_WRITER_H

@@ -20,7 +20,19 @@ void clearFiles() {
     std::ofstream(FILE_NAME + OUT);
 }
 
-std::string encode_and_decode(std::string const& str, bool fl = 0) {
+std::string encode_and_decode_string(std::string const& str) {
+    std::istringstream in(str);
+    std::ostringstream out;
+    encode(in, out);
+
+    std::istringstream fin(out.str());
+    std::ostringstream fout;
+    decode(fin, fout);
+
+    return fout.str();
+}
+
+std::string encode_and_decode_files(std::string const& str, bool fl = 0) {
     if (!fl) {
         std::ofstream out(FILE_NAME + IN);
         out << str;
@@ -82,45 +94,45 @@ bool equal_files(std::ifstream && in1, std::ifstream && in2) {
 TEST(correctness, empty_test) {
     std::string test = "";
 
-    EXPECT_EQ(test, encode_and_decode(test));
+    EXPECT_EQ(test, encode_and_decode_string(test));
 }
 
 
 TEST(correctness, digits_test) {
     std::string test = "123";
 
-    EXPECT_EQ(test, encode_and_decode(test));
+    EXPECT_EQ(test, encode_and_decode_string(test));
 }
 
 
 TEST(correctness, space_test) {
     std::string test = "     ";
 
-    EXPECT_EQ(test, encode_and_decode(test));
+    EXPECT_EQ(test, encode_and_decode_string(test));
 }
 
 TEST(correctness, one_symbol_test) {
     std::string test = "a";
 
-    EXPECT_EQ(test, encode_and_decode(test));
+    EXPECT_EQ(test, encode_and_decode_string(test));
 }
 
 TEST(correctness, russian_symbols_test) {
     std::string test = "балалайка матрешка водка";
 
-    EXPECT_EQ(test, encode_and_decode(test));
+    EXPECT_EQ(test, encode_and_decode_string(test));
 }
 
 TEST(correctness, special_symbols_test) {
     std::string test = "!@#$%^&*()_+/><;:\"\'\\ .?,";
 
-    EXPECT_EQ(test, encode_and_decode(test));
+    EXPECT_EQ(test, encode_and_decode_string(test));
 }
 
 
 TEST(correctness, enter_test) {
     std::string test = "\n\n\n\n\n\n";
-    encode_and_decode(test);
+    encode_and_decode_files(test);
 
     EXPECT_TRUE(equal_files(std::ifstream(FILE_NAME + IN), std::ifstream(FILE_NAME + OUT)));
 }
@@ -131,7 +143,7 @@ TEST(correctness, all_ASCII_test) {
         test += (char) i;
     }
 
-    encode_and_decode(test);
+    encode_and_decode_files(test);
 
     EXPECT_TRUE(equal_files(std::ifstream(FILE_NAME + IN), std::ifstream(FILE_NAME + OUT)));
 }
@@ -147,7 +159,7 @@ TEST(correctness, random_test) {
         }
         out.close();
 
-        encode_and_decode("", 1);
+        encode_and_decode_files("", 1);
 
         EXPECT_TRUE(equal_files(std::ifstream(FILE_NAME + IN), std::ifstream(FILE_NAME + OUT)));
     }
@@ -168,7 +180,7 @@ TEST(correctness, big_abc_dig_test) {
     }
     out.close();
 
-    encode_and_decode("", 1);
+    encode_and_decode_files("", 1);
 
     EXPECT_TRUE(equal_files(std::ifstream(FILE_NAME + IN), std::ifstream(FILE_NAME + OUT)));
 }

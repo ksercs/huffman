@@ -2,7 +2,7 @@
 
 #include "my_writer.h"
 
-My_writer::My_writer(std::ofstream & _os) : os(_os) {}
+My_writer::My_writer(std::ostream & _os) : os(_os) {}
 
 void My_writer::write_byte(uint8_t byt) {
     os << byt;

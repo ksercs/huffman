@@ -2,11 +2,11 @@
 
 #include "my_reader.h"
 
-My_reader::My_reader(std::ifstream & _is) : is(_is), pos(0), unread_buf_size(BUF_SIZE) {
+My_reader::My_reader(std::istream & _is) : is(_is), pos(0), unread_buf_size(BUF_SIZE) {
     buf.resize(BUF_SIZE);
 }
 
-My_reader::My_reader(std::ifstream & _is, bool fl) : is(_is) {
+My_reader::My_reader(std::istream & _is, bool fl) : is(_is) {
     buf.resize(BUF_SIZE);
 }
 

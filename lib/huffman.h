@@ -6,8 +6,8 @@
 #include "my_writer.h"
 #include "tree.h"
 
-void encode(std::ifstream &, std:: ofstream &);
-void decode(std::ifstream &, std:: ofstream &);
+void encode(std::istream &, std::ostream &);
+void decode(std::istream &, std::ostream &);
 
 void build_table(My_reader &);
 void write_encode(My_reader &, My_writer &, huffman_table &);
