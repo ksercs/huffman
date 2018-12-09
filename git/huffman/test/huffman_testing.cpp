@@ -15,11 +15,6 @@ const std::string IN = ".in";
 const std::string OUT = ".out";
 const std::string TXT = ".txt";
 
-void clearFiles() {
-    std::ofstream(FILE_NAME + TXT);
-    std::ofstream(FILE_NAME + OUT);
-}
-
 std::string encode_and_decode(std::string const& str, bool fl = 0) {
     if (!fl) {
         std::ofstream out(FILE_NAME + IN);
@@ -27,27 +22,29 @@ std::string encode_and_decode(std::string const& str, bool fl = 0) {
         out.close();
     }
 
-    clearFiles();
-
     std::ifstream fin(FILE_NAME + IN);
+    std::ofstream(FILE_NAME + TXT);
     std::ofstream fout(FILE_NAME + TXT, std::ios::app);
     encode(fin, fout);
     fin.close();
     fout.close();
 
-    fin.open(FILE_NAME + TXT);
-    fout.open(FILE_NAME + OUT, std::ios::app);
-    decode(fin, fout);
-    fin.close();
-    fout.close();
+    std::ifstream fi(FILE_NAME + TXT);
+    std::ofstream(FILE_NAME + OUT);
+    std::ofstream fo(FILE_NAME + OUT, std::ios::app);
+    decode(fi, fo);
+    fi.close();
+    fo.close();
 
-    fin.open(FILE_NAME + OUT);
+    std::ifstream in(FILE_NAME + OUT);
     std::string res;
-    getline(fin, res);
+    getline(in, res);
+    in.close();
     return res;
+    return "";
 } 
 
-bool equal_files(std::ifstream && in1, std::ifstream && in2) {
+bool equal_files(std::ifstream & in1, std::ifstream & in2) {
     uint32_t size1;
     uint32_t size2;
 
@@ -122,7 +119,9 @@ TEST(correctness, enter_test) {
     std::string test = "\n\n\n\n\n\n";
     encode_and_decode(test);
 
-    EXPECT_TRUE(equal_files(std::ifstream(FILE_NAME + IN), std::ifstream(FILE_NAME + OUT)));
+    std::ifstream f1(FILE_NAME + IN);
+    std::ifstream f2(FILE_NAME + OUT);
+    EXPECT_TRUE(equal_files(f1, f2));
 }
 
 TEST(correctness, all_ASCII_test) {
@@ -133,7 +132,9 @@ TEST(correctness, all_ASCII_test) {
 
     encode_and_decode(test);
 
-    EXPECT_TRUE(equal_files(std::ifstream(FILE_NAME + IN), std::ifstream(FILE_NAME + OUT)));
+    std::ifstream f1(FILE_NAME + IN);
+    std::ifstream f2(FILE_NAME + OUT);
+    EXPECT_TRUE(equal_files(f1, f2));
 }
 
 TEST(correctness, random_test) {
@@ -149,7 +150,9 @@ TEST(correctness, random_test) {
 
         encode_and_decode("", 1);
 
-        EXPECT_TRUE(equal_files(std::ifstream(FILE_NAME + IN), std::ifstream(FILE_NAME + OUT)));
+        std::ifstream f1(FILE_NAME + IN);
+        std::ifstream f2(FILE_NAME + OUT);
+        EXPECT_TRUE(equal_files(f1, f2));
     }
 }
 
@@ -170,39 +173,48 @@ TEST(correctness, big_abc_dig_test) {
 
     encode_and_decode("", 1);
 
-    EXPECT_TRUE(equal_files(std::ifstream(FILE_NAME + IN), std::ifstream(FILE_NAME + OUT)));
+    std::ifstream f1(FILE_NAME + IN);
+    std::ifstream f2(FILE_NAME + OUT);
+    EXPECT_TRUE(equal_files(f1, f2));
 }
 
 TEST(correctness, 15mb_test) {
-    clearFiles();
     std::ifstream fin("test/big_file.in");
+    std::ofstream(FILE_NAME + TXT);
     std::ofstream fout(FILE_NAME + TXT, std::ios::app);
     encode(fin, fout);
     fin.close();
     fout.close();
 
-    fin.open(FILE_NAME + TXT);
-    fout.open(FILE_NAME + OUT, std::ios::app);
-    decode(fin, fout);
-    fin.close();
-    fout.close();
+    std::ifstream fi(FILE_NAME + TXT);
+    std::ofstream(FILE_NAME + OUT);
+    std::ofstream fo(FILE_NAME + OUT, std::ios::app);
+    decode(fi, fo);
+    fi.close();
+    fo.close();
 
-    EXPECT_TRUE(equal_files(std::ifstream("test/big_file.in"), std::ifstream(FILE_NAME + OUT)));
+    std::ifstream f1("test/big_file.in");
+    std::ifstream f2(FILE_NAME + OUT);
+    EXPECT_TRUE(equal_files(f1, f2));
 }
 
 TEST(correctness, pdf_test) {
-    clearFiles();
     std::ifstream fin("test/sample.pdf");
+    std::ofstream(FILE_NAME + TXT);
     std::ofstream fout(FILE_NAME + TXT, std::ios::app);
     encode(fin, fout);
     fin.close();
     fout.close();
 
-    fin.open(FILE_NAME + TXT);
-    fout.open(FILE_NAME + OUT, std::ios::app);
-    decode(fin, fout);
-    fin.close();
-    fout.close();
+    std::ifstream fi(FILE_NAME + TXT);
+    std::ofstream(FILE_NAME + OUT);
+    std::ofstream fo(FILE_NAME + OUT, std::ios::app);
+    decode(fi, fo);
+    fi.close();
+    fo.close();
 
-    EXPECT_TRUE(equal_files(std::ifstream("test/sample.pdf"), std::ifstream(FILE_NAME + OUT)));
+
+    std::ifstream f1("test/sample.pdf");
+    std::ifstream f2(FILE_NAME + OUT);
+    EXPECT_TRUE(equal_files(f1, f2));
 }

@@ -10,7 +10,7 @@ void My_writer::write_byte(uint8_t byt) {
 
 void My_writer::write_table(huffman_table & codes) {
     for (auto it : codes) {
-        os << it.first << " " << it.second << " ";
+        os << it.FF << " " << it.SS << " ";
     }
 }
 
